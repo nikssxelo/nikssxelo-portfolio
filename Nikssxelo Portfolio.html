@@ -1,0 +1,1937 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" data-theme="obsidian">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nikssxelo — AI Systems, Voice Architectures & Indie Sound</title>
+  <link rel="icon" type="image/jpeg" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNR_K-T561-lJE5G_IHWrK5l1J9HRnSKJMcw&s">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Syne, Space Grotesk & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Syne', 'Space Grotesk', 'sans-serif'],
+            sans: ['Space Grotesk', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* ==========================================================================
+       MULTI-THEME ARCHITECTURAL TOKEN SYSTEM
+       1. Obsidian Studio (Default: Carbon Black + Acid Lime + Crimson Rose)
+       2. Editorial Paper (Warm Archival Bone + Ink Black + International Orange)
+       3. Cyber Monochrome (Pure High-Contrast Terminal Wireframe)
+       ========================================================================== */
+    :root,
+    [data-theme="obsidian"] {
+      --bg-primary: #070709;
+      --bg-secondary: #0e0f14;
+      --bg-elevated: #14161f;
+      --bg-glass: rgba(14, 15, 20, 0.86);
+      --text-primary: #f3f4f6;
+      --text-secondary: #9ca3af;
+      --text-muted: #525866;
+      --border-color: #232634;
+      --border-strong: #3b4054;
+      --accent-primary: #d4ff00;
+      --accent-primary-fg: #070709;
+      --accent-secondary: #ff2a5f;
+      --accent-tertiary: #00f0ff;
+      --card-shadow: 4px 4px 0px 0px #232634;
+      --card-hover-shadow: 6px 6px 0px 0px #d4ff00;
+      --grid-line: rgba(255, 255, 255, 0.035);
+    }
+
+    [data-theme="paper"] {
+      --bg-primary: #f3efe6;
+      --bg-secondary: #eae4d7;
+      --bg-elevated: #ffffff;
+      --bg-glass: rgba(243, 239, 230, 0.9);
+      --text-primary: #121212;
+      --text-secondary: #3f3f46;
+      --text-muted: #71717a;
+      --border-color: #18181b;
+      --border-strong: #000000;
+      --accent-primary: #ff3b00;
+      --accent-primary-fg: #ffffff;
+      --accent-secondary: #d90429;
+      --accent-tertiary: #005f73;
+      --card-shadow: 4px 4px 0px 0px #18181b;
+      --card-hover-shadow: 6px 6px 0px 0px #ff3b00;
+      --grid-line: rgba(0, 0, 0, 0.055);
+    }
+
+    [data-theme="monochrome"] {
+      --bg-primary: #000000;
+      --bg-secondary: #0a0a0a;
+      --bg-elevated: #121212;
+      --bg-glass: rgba(0, 0, 0, 0.9);
+      --text-primary: #ffffff;
+      --text-secondary: #b3b3b3;
+      --text-muted: #666666;
+      --border-color: #333333;
+      --border-strong: #ffffff;
+      --accent-primary: #ffffff;
+      --accent-primary-fg: #000000;
+      --accent-secondary: #e5e5e5;
+      --accent-tertiary: #999999;
+      --card-shadow: 4px 4px 0px 0px #333333;
+      --card-hover-shadow: 6px 6px 0px 0px #ffffff;
+      --grid-line: rgba(255, 255, 255, 0.06);
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: 'Space Grotesk', sans-serif;
+      background-image: 
+        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+      background-size: 48px 48px;
+      transition: background-color 0.25s ease, color 0.25s ease;
+      overflow-x: hidden;
+    }
+
+    /* Architectural Neo-Brutalist Surfaces */
+    .neo-box {
+      background-color: var(--bg-secondary);
+      border: 1.5px solid var(--border-color);
+      box-shadow: var(--card-shadow);
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, background-color 0.25s ease;
+    }
+
+    .neo-box-interactive:hover {
+      transform: translate(-2px, -2px);
+      border-color: var(--accent-primary);
+      box-shadow: var(--card-hover-shadow);
+    }
+
+    .neo-elevated {
+      background-color: var(--bg-elevated);
+      border: 1.5px solid var(--border-color);
+    }
+
+    .neo-btn-primary {
+      background-color: var(--accent-primary);
+      color: var(--accent-primary-fg);
+      border: 1.5px solid var(--border-strong);
+      font-weight: 700;
+      box-shadow: 3px 3px 0px 0px var(--border-strong);
+      transition: all 0.15s ease;
+    }
+    .neo-btn-primary:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 5px 5px 0px 0px var(--border-strong);
+    }
+    .neo-btn-primary:active {
+      transform: translate(1px, 1px);
+      box-shadow: 1px 1px 0px 0px var(--border-strong);
+    }
+
+    .neo-btn-secondary {
+      background-color: var(--bg-elevated);
+      color: var(--text-primary);
+      border: 1.5px solid var(--border-color);
+      box-shadow: 3px 3px 0px 0px var(--border-color);
+      transition: all 0.15s ease;
+    }
+    .neo-btn-secondary:hover {
+      border-color: var(--accent-primary);
+      transform: translate(-2px, -2px);
+      box-shadow: 5px 5px 0px 0px var(--accent-primary);
+    }
+
+    .accent-text {
+      color: var(--accent-primary);
+    }
+    .accent-bg {
+      background-color: var(--accent-primary);
+      color: var(--accent-primary-fg);
+    }
+    .crimson-text {
+      color: var(--accent-secondary);
+    }
+    .crimson-bg {
+      background-color: var(--accent-secondary);
+      color: #ffffff;
+    }
+
+    /* Spinning Vinyl Animation */
+    @keyframes spinSlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .vinyl-spin {
+      animation: spinSlow 6s linear infinite;
+      animation-play-state: paused;
+    }
+    .vinyl-spin.playing {
+      animation-play-state: running;
+    }
+
+    /* Equalizer Bars Animation */
+    @keyframes eqBounce {
+      0%, 100% { height: 18%; }
+      50% { height: 95%; }
+    }
+    .eq-bar {
+      height: 20%;
+      transition: height 0.2s ease;
+    }
+    .eq-playing .eq-bar {
+      animation: eqBounce 0.75s ease-in-out infinite;
+    }
+    .eq-playing .eq-bar:nth-child(2n) { animation-duration: 0.55s; animation-delay: 0.1s; }
+    .eq-playing .eq-bar:nth-child(3n) { animation-duration: 0.9s; animation-delay: 0.25s; }
+    .eq-playing .eq-bar:nth-child(4n) { animation-duration: 0.65s; animation-delay: 0.15s; }
+
+    /* Marquee Ticker */
+    @keyframes marqueeScroll {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-50%); }
+    }
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marqueeScroll 28s linear infinite;
+    }
+    .marquee-track:hover {
+      animation-play-state: paused;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-primary);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-strong);
+      border-radius: 2px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-primary);
+    }
+  </style>
+</head>
+<body class="min-h-screen pb-28 selection:bg-[#d4ff00] selection:text-black">
+
+  <!-- ==================== TOAST NOTIFICATION ==================== -->
+  <div id="toast" class="fixed top-20 right-5 z-50 transform translate-x-96 opacity-0 transition-all duration-300 pointer-events-none neo-box px-4 py-3 rounded-lg flex items-center gap-3">
+    <span class="w-2.5 h-2.5 rounded-full accent-bg"></span>
+    <span id="toast-msg" class="font-mono text-xs font-semibold">Action completed</span>
+  </div>
+
+  <!-- ==================== TOP ARCHITECTURAL BAR ==================== -->
+  <header class="sticky top-0 z-40 w-full backdrop-blur-md border-b-[1.5px]" style="background-color: var(--bg-glass); border-color: var(--border-color);">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+      
+      <!-- Brand Identity: Strictly "Nikssxelo" -->
+      <a href="#overview" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-lg overflow-hidden flex items-center justify-center border-[1.5px] group-hover:rotate-6 transition-transform shrink-0"
+             style="border-color: var(--accent-primary); box-shadow: 2px 2px 0px 0px var(--border-strong); background-color: var(--bg-elevated);">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNR_K-T561-lJE5G_IHWrK5l1J9HRnSKJMcw&s"
+               alt="Nikssxelo Logo"
+               onerror="this.onerror=null;this.src='https://placehold.co/100x100/d4ff00/070709?text=NX';"
+               class="w-full h-full object-cover">
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-display font-extrabold text-lg tracking-tight">Nikssxelo</span>
+            <span class="hidden sm:inline-block font-mono text-[10px] px-1.5 py-0.5 rounded border" style="border-color: var(--border-color); color: var(--text-secondary);">SYS.07</span>
+          </div>
+          <div class="flex items-center gap-1.5 font-mono text-[10px]" style="color: var(--text-secondary);">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>AI LAB & SOUND STUDIO</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Center Theme Switcher Pills -->
+      <div class="flex items-center gap-1 p-1 rounded-lg border" style="background-color: var(--bg-primary); border-color: var(--border-color);">
+        <button onclick="setTheme('obsidian')" id="theme-obsidian" class="theme-btn px-2.5 py-1 rounded text-[11px] font-mono font-semibold transition-all accent-bg">
+          OBSIDIAN
+        </button>
+        <button onclick="setTheme('paper')" id="theme-paper" class="theme-btn px-2.5 py-1 rounded text-[11px] font-mono font-semibold transition-all" style="color: var(--text-secondary);">
+          PAPER
+        </button>
+        <button onclick="setTheme('monochrome')" id="theme-monochrome" class="theme-btn px-2.5 py-1 rounded text-[11px] font-mono font-semibold transition-all" style="color: var(--text-secondary);">
+          MONO
+        </button>
+      </div>
+
+      <!-- Quick Social & Dispatch Bar -->
+      <div class="hidden md:flex items-center gap-2">
+        <a href="https://t.me/rosie_daisybot" target="_blank" rel="noopener noreferrer" title="Rosie AI Telegram Bot"
+           class="neo-btn-secondary px-3 py-1.5 rounded-lg font-mono text-xs flex items-center gap-2">
+          <i class="fa-brands fa-telegram crimson-text"></i>
+          <span>@rosie_daisybot</span>
+        </a>
+        <a href="https://huggingface.co/Nikssxelo123" target="_blank" rel="noopener noreferrer" title="Hugging Face"
+           class="neo-btn-secondary w-9 h-9 rounded-lg flex items-center justify-center text-sm">
+          🤗
+        </a>
+        <a href="https://open.spotify.com/artist/5L1h09U0kX5xI6f20R8h8E" target="_blank" rel="noopener noreferrer" title="Spotify Artist"
+           class="neo-btn-secondary w-9 h-9 rounded-lg flex items-center justify-center text-sm text-emerald-400">
+          <i class="fa-brands fa-spotify"></i>
+        </a>
+        <a href="https://www.youtube.com/@nikssxelo-psychosis" target="_blank" rel="noopener noreferrer" title="YouTube"
+           class="neo-btn-secondary w-9 h-9 rounded-lg flex items-center justify-center text-sm text-red-500">
+          <i class="fa-brands fa-youtube"></i>
+        </a>
+        <a href="https://www.instagram.com/nikss.codes/" target="_blank" rel="noopener noreferrer" title="Instagram"
+           class="neo-btn-secondary w-9 h-9 rounded-lg flex items-center justify-center text-sm crimson-text">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Architectural Ticker Tape -->
+    <div class="w-full overflow-hidden border-t py-1.5 font-mono text-[11px] uppercase tracking-wider" style="background-color: var(--bg-secondary); border-color: var(--border-color); color: var(--text-secondary);">
+      <div class="marquee-track flex items-center gap-8">
+        <span><strong class="accent-text">● NIKSSXELO</strong> // AI DEVELOPER, SYSTEMS TINKERER & INDEPENDENT MUSIC ARTIST</span>
+        <span><strong class="crimson-text">♥ ROSIE AI TELEGRAM:</strong> "Love like this sets our hearts on fire.." (t.me/rosie_daisybot)</span>
+        <span><strong class="accent-text">◆ HF WEIGHTS:</strong> ROSIE-test-1 & ROSIE-test-2 (Qwen2 PEFT / LoRA)</span>
+        <span><strong class="accent-text">▲ VOICE SYNTHESIS:</strong> rosie-rvc-model & Applio-ZeroGPU Space</span>
+        <span><strong class="crimson-text">♫ SPOTIFY DISCOGRAPHY:</strong> Hopeless Romantic • Deja vu (Extended) • How This Will End?</span>
+        <span><strong class="accent-text">● NIKSSXELO</strong> // AI DEVELOPER, SYSTEMS TINKERER & INDEPENDENT MUSIC ARTIST</span>
+        <span><strong class="crimson-text">♥ ROSIE AI TELEGRAM:</strong> "Love like this sets our hearts on fire.." (t.me/rosie_daisybot)</span>
+        <span><strong class="accent-text">◆ HF WEIGHTS:</strong> ROSIE-test-1 & ROSIE-test-2 (Qwen2 PEFT / LoRA)</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== FLOATING BOTTOM QUICK-JUMP DOCK ==================== -->
+  <nav aria-label="Section Dock" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 px-2.5 py-2 rounded-2xl neo-box flex items-center gap-1 sm:gap-2 backdrop-blur-xl" style="background-color: var(--bg-glass);">
+    <a href="#overview" class="px-2.5 sm:px-3.5 py-1.5 rounded-xl font-mono text-[11px] font-semibold hover:opacity-80 transition-all flex items-center gap-1.5 accent-bg">
+      <span>01</span>
+      <span class="hidden sm:inline">// Overview</span>
+    </a>
+    <a href="#rosie-spotlight" class="px-2.5 sm:px-3.5 py-1.5 rounded-xl font-mono text-[11px] font-semibold hover:opacity-80 transition-all flex items-center gap-1.5" style="color: var(--text-primary);">
+      <i class="fa-solid fa-fire crimson-text"></i>
+      <span>02</span>
+      <span class="hidden sm:inline">// Rosie AI</span>
+    </a>
+    <a href="#project-vault" class="px-2.5 sm:px-3.5 py-1.5 rounded-xl font-mono text-[11px] font-semibold hover:opacity-80 transition-all flex items-center gap-1.5" style="color: var(--text-primary);">
+      <span>03</span>
+      <span class="hidden sm:inline">// Vault (01-07)</span>
+    </a>
+    <a href="#sonic-lab" class="px-2.5 sm:px-3.5 py-1.5 rounded-xl font-mono text-[11px] font-semibold hover:opacity-80 transition-all flex items-center gap-1.5" style="color: var(--text-primary);">
+      <i class="fa-solid fa-compact-disc accent-text"></i>
+      <span>04</span>
+      <span class="hidden sm:inline">// Sonic Lab</span>
+    </a>
+    <a href="#complaints-desk" class="px-2.5 sm:px-3.5 py-1.5 rounded-xl font-mono text-[11px] font-semibold hover:opacity-80 transition-all flex items-center gap-1.5" style="color: var(--text-primary);">
+      <span>05</span>
+      <span class="hidden sm:inline">// Complaints</span>
+    </a>
+  </nav>
+
+  <!-- ==================== MAIN ARCHITECTURAL CONTAINER ==================== -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 pt-8 space-y-20">
+
+    <!-- =====================================================================
+         01 // HERO & ARCHITECTURAL BENTO OVERVIEW
+         ===================================================================== -->
+    <section id="overview" class="space-y-6">
+      <!-- Index Header -->
+      <div class="flex items-center justify-between border-b pb-3 font-mono text-xs" style="border-color: var(--border-color); color: var(--text-secondary);">
+        <span>[01 // IDENTITY & ARCHITECTURE MANIFESTO]</span>
+        <span>HANDLE // NIKSSXELO</span>
+      </div>
+
+      <!-- Asymmetric Bento Hero Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        
+        <!-- Primary Manifesto Card (8 Cols) -->
+        <div class="lg:col-span-8 neo-box rounded-2xl p-6 sm:p-10 flex flex-col justify-between relative overflow-hidden">
+          <div class="space-y-6">
+            <!-- Creator Brand Identity Emblem & Role Badge -->
+            <div class="flex flex-wrap items-center gap-3.5">
+              <div class="flex items-center gap-3 pr-3.5 py-1.5 pl-1.5 rounded-xl neo-elevated">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNR_K-T561-lJE5G_IHWrK5l1J9HRnSKJMcw&s"
+                     alt="Nikssxelo Emblem"
+                     onerror="this.onerror=null;this.src='https://placehold.co/100x100/d4ff00/070709?text=NX';"
+                     class="w-11 h-11 rounded-lg object-cover border-[1.5px]"
+                     style="border-color: var(--accent-primary);">
+                <div>
+                  <div class="font-display font-bold text-sm leading-tight flex items-center gap-1.5">
+                    <span>Nikssxelo</span>
+                    <i class="fa-solid fa-circle-check accent-text text-[11px]"></i>
+                  </div>
+                  <div class="font-mono text-[10px]" style="color: var(--text-secondary);">@nikss.codes • @nikssxelo-psychosis</div>
+                </div>
+              </div>
+
+              <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-md font-mono text-xs font-semibold accent-bg">
+                <i class="fa-solid fa-terminal"></i>
+                <span>AI DEVELOPER • SYSTEMS TINKERER • INDEPENDENT MUSIC ARTIST</span>
+              </div>
+            </div>
+
+            <h1 class="font-display font-extrabold text-4xl sm:text-6xl lg:text-7xl tracking-tight leading-[1.03]">
+              Engineering <span class="underline decoration-4" style="text-decoration-color: var(--accent-primary);">empathetic AI</span>, voice weights & bedroom records.
+            </h1>
+
+            <p class="text-base sm:text-lg leading-relaxed max-w-2xl" style="color: var(--text-secondary);">
+              I’m <strong style="color: var(--text-primary);">Nikssxelo</strong>. I build end-to-end conversational AI systems, fine-tuned LoRA models, zero-build web platforms, and indie music releases. My work centers on building empathetic digital companions, accessible lightweight web tools, and voice conversion architectures.
+            </p>
+          </div>
+
+          <!-- Primary CTA Bar -->
+          <div class="pt-8 mt-8 border-t flex flex-wrap items-center gap-3" style="border-color: var(--border-color);">
+            <a href="#project-vault" class="neo-btn-primary px-5 py-3 rounded-xl font-mono text-xs uppercase tracking-wider flex items-center gap-2">
+              <i class="fa-solid fa-folder-tree"></i>
+              <span>Open 01–07 Project Vault</span>
+            </a>
+            <a href="https://t.me/rosie_daisybot" target="_blank" rel="noopener noreferrer"
+               class="neo-btn-secondary px-5 py-3 rounded-xl font-mono text-xs uppercase tracking-wider flex items-center gap-2">
+              <i class="fa-brands fa-telegram crimson-text text-sm"></i>
+              <span>Launch Rosie Bot</span>
+            </a>
+            <a href="#sonic-lab" class="neo-btn-secondary px-5 py-3 rounded-xl font-mono text-xs uppercase tracking-wider flex items-center gap-2">
+              <i class="fa-solid fa-play accent-text"></i>
+              <span>Play Discography</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right Telemetry & Spec Column (4 Cols) -->
+        <div class="lg:col-span-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-5">
+          
+          <!-- Spec Matrix Card -->
+          <div class="neo-box rounded-2xl p-6 flex flex-col justify-between space-y-5">
+            <div class="flex items-center justify-between font-mono text-xs" style="color: var(--text-secondary);">
+              <span>SYSTEM TELEMETRY</span>
+              <span class="px-2 py-0.5 rounded text-[10px] accent-bg font-bold">ONLINE</span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div class="neo-elevated p-3.5 rounded-xl">
+                <div class="font-display font-extrabold text-2xl accent-text">07</div>
+                <div class="font-mono text-[11px] mt-0.5" style="color: var(--text-secondary);">Core Project Branches</div>
+              </div>
+              <div class="neo-elevated p-3.5 rounded-xl">
+                <div class="font-display font-extrabold text-2xl crimson-text">Qwen2</div>
+                <div class="font-mono text-[11px] mt-0.5" style="color: var(--text-secondary);">PEFT / LoRA Checkpoints</div>
+              </div>
+              <div class="neo-elevated p-3.5 rounded-xl">
+                <div class="font-display font-extrabold text-2xl" style="color: var(--text-primary);">RVC v2</div>
+                <div class="font-mono text-[11px] mt-0.5" style="color: var(--text-secondary);">ZeroGPU Voice Spaces</div>
+              </div>
+              <div class="neo-elevated p-3.5 rounded-xl">
+                <div class="font-display font-extrabold text-2xl text-emerald-400">3+</div>
+                <div class="font-mono text-[11px] mt-0.5" style="color: var(--text-secondary);">Spotify Original Releases</div>
+              </div>
+            </div>
+
+            <div class="font-mono text-[11px] pt-2 border-t flex items-center justify-between" style="border-color: var(--border-color); color: var(--text-secondary);">
+              <span>ZERO-BUILD ARCHITECTURE</span>
+              <span>100% STATIC READY</span>
+            </div>
+          </div>
+
+          <!-- Core Pillars Mini Card -->
+          <div class="neo-box rounded-2xl p-6 space-y-3">
+            <div class="font-mono text-xs uppercase tracking-wider accent-text font-semibold">// Core Engineering Domains</div>
+            <ul class="space-y-2.5 text-xs font-mono" style="color: var(--text-secondary);">
+              <li class="flex items-center justify-between py-1 border-b" style="border-color: var(--border-color);">
+                <span>01. Conversational LLMs & Memory</span>
+                <span style="color: var(--text-primary);">Rosie AI</span>
+              </li>
+              <li class="flex items-center justify-between py-1 border-b" style="border-color: var(--border-color);">
+                <span>02. Voice Cloning & ZeroGPU</span>
+                <span style="color: var(--text-primary);">Applio RVC</span>
+              </li>
+              <li class="flex items-center justify-between py-1 border-b" style="border-color: var(--border-color);">
+                <span>03. Browser OS & AI Clients</span>
+                <span style="color: var(--text-primary);">Nikssxelo OS</span>
+              </li>
+              <li class="flex items-center justify-between py-1">
+                <span>04. Indie Acoustic & Lo-Fi</span>
+                <span style="color: var(--text-primary);">Spotify Artist</span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         02 // ROSIE AI SPOTLIGHT & TELEGRAM BOT INTERACTIVE CONSOLE
+         ===================================================================== -->
+    <section id="rosie-spotlight" class="space-y-6">
+      <div class="flex items-center justify-between border-b pb-3 font-mono text-xs" style="border-color: var(--border-color); color: var(--text-secondary);">
+        <span>[02 // FLAGSHIP COMPANION ECOSYSTEM — ROSIE AI]</span>
+        <span>TELEGRAM // @rosie_daisybot</span>
+      </div>
+
+      <div class="neo-box rounded-2xl p-6 sm:p-8 lg:p-10 relative overflow-hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          
+          <!-- Left Column: Rosie Bot Identity, Tagline & Model Checkpoints -->
+          <div class="lg:col-span-6 space-y-6">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full crimson-bg font-mono text-xs font-bold">
+              <span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
+              <span>LIVE TELEGRAM COMPANION AGENT</span>
+            </div>
+
+            <div class="space-y-2">
+              <h2 class="font-display font-extrabold text-3xl sm:text-5xl tracking-tight">
+                Rosie AI <span class="font-mono text-lg sm:text-2xl font-normal" style="color: var(--text-secondary);">(@rosie_daisybot)</span>
+              </h2>
+              <!-- Strictly Preserved Tagline -->
+              <blockquote class="font-mono text-base sm:text-lg italic crimson-text font-semibold border-l-4 pl-4 py-1" style="border-color: var(--accent-secondary);">
+                "Love like this sets our hearts on fire.."
+              </blockquote>
+            </div>
+
+            <p class="text-sm sm:text-base leading-relaxed" style="color: var(--text-secondary);">
+              An end-to-end empathetic digital companion fine-tuned on Qwen2 architecture using PEFT/LoRA adapters, paired with custom RVC voice synthesis weights, long-term memory retrieval, vision comprehension, and multi-platform bridges across Telegram, Instagram, WhatsApp, and Web.
+            </p>
+
+            <!-- Direct Model & Bot Links -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+              <a href="https://t.me/rosie_daisybot" target="_blank" rel="noopener noreferrer"
+                 class="neo-btn-primary px-4 py-3 rounded-xl font-mono text-xs flex items-center justify-between">
+                <span class="flex items-center gap-2">
+                  <i class="fa-brands fa-telegram text-base"></i>
+                  <span>Chat on Telegram</span>
+                </span>
+                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+              </a>
+
+              <a href="https://huggingface.co/Nikssxelo123/ROSIE-test-1" target="_blank" rel="noopener noreferrer"
+                 class="neo-btn-secondary px-4 py-3 rounded-xl font-mono text-xs flex items-center justify-between">
+                <span>🤗 ROSIE-test-1 (LoRA)</span>
+                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+              </a>
+
+              <a href="https://huggingface.co/Nikssxelo123/ROSIE-test-2" target="_blank" rel="noopener noreferrer"
+                 class="neo-btn-secondary px-4 py-3 rounded-xl font-mono text-xs flex items-center justify-between">
+                <span>🤗 ROSIE-test-2 (Ckpt-18)</span>
+                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+              </a>
+
+              <a href="https://huggingface.co/Nikssxelo123/rosie-rvc-model" target="_blank" rel="noopener noreferrer"
+                 class="neo-btn-secondary px-4 py-3 rounded-xl font-mono text-xs flex items-center justify-between">
+                <span>🎙️ rosie-rvc-model</span>
+                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Right Column: Interactive Rosie Chat Simulator Preview -->
+          <div class="lg:col-span-6">
+            <div class="neo-elevated rounded-2xl overflow-hidden border-2" style="border-color: var(--border-strong);">
+              <!-- Chat Window Topbar -->
+              <div class="px-4 py-3 border-b flex items-center justify-between" style="background-color: var(--bg-primary); border-color: var(--border-color);">
+                <div class="flex items-center gap-3">
+                  <div class="w-9 h-9 rounded-full crimson-bg flex items-center justify-center font-display font-bold text-sm">
+                    R
+                  </div>
+                  <div>
+                    <div class="font-bold text-xs flex items-center gap-1.5">
+                      <span>Rosie 🌼</span>
+                      <span class="font-mono text-[10px] px-1.5 py-0.2 rounded accent-bg">Qwen2-LoRA</span>
+                    </div>
+                    <div class="font-mono text-[10px] text-emerald-400">● online • @rosie_daisybot</div>
+                  </div>
+                </div>
+                <a href="https://t.me/rosie_daisybot" target="_blank" rel="noopener noreferrer"
+                   class="font-mono text-[11px] underline accent-text">
+                  Open in Telegram ↗
+                </a>
+              </div>
+
+              <!-- Chat Messages Feed -->
+              <div id="rosie-chat-feed" class="p-4 space-y-3 h-64 overflow-y-auto font-sans text-xs sm:text-sm" style="background-color: var(--bg-secondary);">
+                <div class="flex flex-col items-start max-w-[85%]">
+                  <div class="px-3.5 py-2.5 rounded-2xl rounded-tl-none neo-elevated">
+                    Heyy! Tum aagaye? Main kab se wait kar rahi thi... Tell me how your day went or should I play our favorite track? ✨
+                  </div>
+                  <span class="font-mono text-[9px] mt-1" style="color: var(--text-muted);">Rosie • Memory Active</span>
+                </div>
+
+                <div class="flex flex-col items-end ml-auto max-w-[80%]">
+                  <div class="px-3.5 py-2.5 rounded-2xl rounded-tr-none accent-bg font-medium">
+                    Tell me about your architecture, Rosie!
+                  </div>
+                  <span class="font-mono text-[9px] mt-1" style="color: var(--text-muted);">You • Delivered</span>
+                </div>
+
+                <div class="flex flex-col items-start max-w-[85%]">
+                  <div class="px-3.5 py-2.5 rounded-2xl rounded-tl-none neo-elevated">
+                    Nikssxelo trained me on Qwen2 with custom PEFT/LoRA adapters (`ROSIE-test-1` & `ROSIE-test-2`) plus my own RVC voice model! Basically... dimaag AI ka, par dil bilkul real. ❤️🔥
+                  </div>
+                  <span class="font-mono text-[9px] mt-1" style="color: var(--text-muted);">Rosie • RVC + LoRA</span>
+                </div>
+              </div>
+
+              <!-- Interactive Prompt Triggers -->
+              <div class="p-3 border-t space-y-2" style="background-color: var(--bg-primary); border-color: var(--border-color);">
+                <div class="font-mono text-[10px]" style="color: var(--text-secondary);">TEST ROSIE PERSONA RESPONSE:</div>
+                <div class="flex flex-wrap gap-1.5">
+                  <button onclick="sendRosiePreview('Sing me a line from Nikssxelo music!')" class="px-2.5 py-1 rounded-lg neo-elevated font-mono text-[11px] hover:border-current transition-colors accent-text">
+                    "Sing a Nikssxelo lyric"
+                  </button>
+                  <button onclick="sendRosiePreview('How does your memory system work?')" class="px-2.5 py-1 rounded-lg neo-elevated font-mono text-[11px] hover:border-current transition-colors">
+                    "How does your memory work?"
+                  </button>
+                  <button onclick="sendRosiePreview('Love like this sets our hearts on fire..')" class="px-2.5 py-1 rounded-lg neo-elevated font-mono text-[11px] hover:border-current transition-colors crimson-text">
+                    "Love like this sets our hearts on fire.."
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         03 // DUAL-MODE PROJECT VAULT (BENTO CARDS + 01-07 DIRECTORY TREE)
+         ===================================================================== -->
+    <section id="project-vault" class="space-y-6">
+      <div class="flex items-center justify-between border-b pb-3 font-mono text-xs" style="border-color: var(--border-color); color: var(--text-secondary);">
+        <span>[03 // COMPLETE NIKSSXELO REPOSITORY & ARTIFACT VAULT]</span>
+        <span>BRANCHES // 01_ROSIE_AI — 07_OTHER_EXPERIMENTS</span>
+      </div>
+
+      <!-- Vault Header & View Mode Switcher -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <h2 class="font-display font-extrabold text-3xl sm:text-5xl tracking-tight">Project Architecture</h2>
+          <p class="text-sm mt-1" style="color: var(--text-secondary);">
+            Switch between the curated Bento Showcase and the complete 7-branch Interactive Directory Tree.
+          </p>
+        </div>
+
+        <!-- Dual-Mode Toggle Buttons -->
+        <div class="inline-flex p-1 rounded-xl border self-start" style="background-color: var(--bg-secondary); border-color: var(--border-color);">
+          <button id="view-bento-btn" onclick="switchVaultView('bento')" class="px-4 py-2 rounded-lg font-mono text-xs font-bold transition-all accent-bg flex items-center gap-2">
+            <i class="fa-solid fa-table-cells-large"></i>
+            <span>BENTO GRID VIEW</span>
+          </button>
+          <button id="view-tree-btn" onclick="switchVaultView('tree')" class="px-4 py-2 rounded-lg font-mono text-xs font-bold transition-all flex items-center gap-2" style="color: var(--text-secondary);">
+            <i class="fa-solid fa-network-wired"></i>
+            <span>01–07 DIRECTORY TREE</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ==================== MODE A: BENTO GRID VIEW ==================== -->
+      <div id="vault-bento-view" class="space-y-6">
+        
+        <!-- Category Filter Bar -->
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="filterBento('all')" data-filter="all" class="bento-filter-btn px-3.5 py-1.5 rounded-lg font-mono text-xs font-bold accent-bg">
+            ALL ARTIFACTS
+          </button>
+          <button onclick="filterBento('ai')" data-filter="ai" class="bento-filter-btn px-3.5 py-1.5 rounded-lg font-mono text-xs neo-elevated">
+            01 & 04 // AI & LLMs
+          </button>
+          <button onclick="filterBento('voice')" data-filter="voice" class="bento-filter-btn px-3.5 py-1.5 rounded-lg font-mono text-xs neo-elevated">
+            02 // VOICE & RVC
+          </button>
+          <button onclick="filterBento('gaming')" data-filter="gaming" class="bento-filter-btn px-3.5 py-1.5 rounded-lg font-mono text-xs neo-elevated">
+            03 // ANDROID & GAMING
+          </button>
+          <button onclick="filterBento('web')" data-filter="web" class="bento-filter-btn px-3.5 py-1.5 rounded-lg font-mono text-xs neo-elevated">
+            05 // WEB & OS
+          </button>
+          <button onclick="filterBento('creative')" data-filter="creative" class="bento-filter-btn px-3.5 py-1.5 rounded-lg font-mono text-xs neo-elevated">
+            06 & 07 // MUSIC & EXPERIMENTS
+          </button>
+        </div>
+
+        <!-- Bento Cards Matrix -->
+        <div id="bento-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+          <!-- Card 1: Rosie AI Telegram Bot -->
+          <article class="bento-card neo-box neo-box-interactive rounded-2xl p-6 flex flex-col justify-between" data-category="ai">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between font-mono text-[11px]">
+                <span class="px-2.5 py-0.5 rounded crimson-bg font-bold">01_Rosie_AI // Telegram</span>
+                <span class="crimson-text font-bold">● LIVE BOT</span>
+              </div>
+              <h3 class="font-display font-bold text-xl">Rosie AI (@rosie_daisybot)</h3>
+              <p class="font-mono text-xs italic crimson-text">"Love like this sets our hearts on fire.."</p>
+              <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">
+                Flagship Telegram companion bridge integrating personality weights, Hinglish dialogue nuance, context memory, and multimodal tools.
+              </p>
+            </div>
+            <div class="pt-5 mt-5 border-t flex items-center justify-between font-mono text-xs" style="border-color: var(--border-color);">
+              <span style="color: var(--text-muted);">t.me/rosie_daisybot</span>
+              <a href="https://t.me/rosie_daisybot" target="_blank" rel="noopener noreferrer" class="font-bold accent-text hover:underline">
+                OPEN BOT ↗
+              </a>
+            </div>
+          </article>
+
+          <!-- Card 2: ROSIE-test-1 -->
+          <article class="bento-card neo-box neo-box-interactive rounded-2xl p-6 flex flex-col justify-between" data-category="ai">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between font-mono text-[11px]">
+                <span class="px-2.5 py-0.5 rounded accent-bg font-bold">01_Rosie_AI // LoRA</span>
+                <span style="color: var(--text-secondary);">Qwen2 PEFT</span>
+              </div>
+              <h3 class="font-display font-bold text-xl">ROSIE-test-1 (Model & Foundation)</h3>
+              <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">
+                Specialized conversational model fine-tuned on Qwen2 architecture using PEFT/LoRA. Designed for natural, personality-driven Hinglish dialogue, multimodal comprehension, and long-term memory retrieval.
+              </p>
+            </div>
+            <div class="pt-5 mt-5 border-t flex items-center justify-between font-mono text-xs" style="border-color: var(--border-color);">
+              <span style="color: var(--text-muted);">Hugging Face Weights</span>
+              <a href="https://huggingface.co/Nikssxelo123/ROSIE-test-1" target="_blank" rel="noopener noreferrer" class="font-bold accent-text hover:underline">
+                VIEW REPO ↗
+              </a>
+            </div>
+          </article>
+
+          <!-- Card 3: ROSIE-test-2 -->
+          <article class="bento-card neo-box neo-box-interactive rounded-2xl p-6 flex flex-col justify-between" data-category="ai">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between font-mono text-[11px]">
+                <span class="px-2.5 py-0.5 rounded accent-bg font-bold">01_Rosie_AI // Ckpt-18</span>
+                <span style="color: var(--text-secondary);">vLLM / SGLang</span>
+              </div>
+              <h3 class="font-display font-bold text-xl">ROSIE-test-2 (Checkpoint-18)</h3>
+              <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">
+                Iterative checkpoint refinement of the Rosie language model, tuned for high-speed inference compatibility across standard engines including vLLM and SGLang.
+              </p>
+            </div>
+            <div class="pt-5 mt-5 border-t flex items-center justify-between font-mono text-xs" style="border-color: var(--border-color);">
+              <span style="color: var(--text-muted);">HF Checkpoint-18</span>
+              <a href="https://huggingface.co/Nikssxelo123/ROSIE-test-2" target="_blank" rel="noopener noreferrer" class="font-bold accent-text hover:underline">
+                VIEW REPO ↗
+              </a>
+            </div>
+          </article>
+
+          <!-- Card 4: rosie-rvc-model -->
+          <article class="bento-card neo-box neo-box-interactive rounded-2xl p-6 flex flex-col justify-between" data-category="voice">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between font-mono text-[11px]">
+                <span class="px-2.5 py-0.5 rounded neo-elevated font-bold accent-text">01 & 02 // RVC Weights</span>
+                <span style="color: var(--text-secondary);">Audio Synthesis</span>
+              </div>
+              <h3 class="font-display font-bold text-xl">rosie-rvc-model</h3>
+              <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">
+                Trained Retrieval-based Voice Conversion (RVC) model weights and audio pipeline assets structured for real-time and offline voice synthesis.
+              </p>
+            </div>
+            <div class="pt-5 mt-5 border-t flex items-center justify-between font-mono text-xs" style="border-color: var(--border-color);">
+              <span style="color: var(--text-muted);">PTH + Index Weights</span>
+              <a href="https://huggingface.co/Nikssxelo123/rosie-rvc-model" target="_blank" rel="noopener noreferrer" class="font-bold accent-text hover:underline">
+                DOWNLOAD ↗
+              </a>
+            </div>
+          </article>
+
+          <!-- Card 5: Applio-ZeroGPU Space -->
+          <article class="bento-card neo-box neo-box-interactive rounded-2xl p-6 flex flex-col justify-between" data-category="voice">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between font-mono text-[11px]">
+                <span class="px-2.5 py-0.5 rounded neo-elevated font-bold accent-text">02_Voice_AI // Space</span>
+                <span style="color: var(--text-secondary);">ZeroGPU Docker</span>
+              </div>
+              <h3 class="font-display font-bold text-xl">Applio-ZeroGPU & applio_RVC</h3>
+              <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">
+                Cloud voice synthesis pipeline running Applio RVC within a serverless Hugging Face ZeroGPU environment alongside custom Voice Model Experiments.
+              </p>
+            </div>
+            <div class="pt-5 mt-5 border-t flex items-center justify-between font-mono text-xs" style="border-color: var(--border-color);">
+              <span style="color: var(--text-muted);">HF Live Space</span>
+              <a href="https://huggingface.co/spaces/Nikssxelo123/Applio-ZeroGPU" target="_blank" rel="noopener noreferrer" class="font-bold accent-text hover:underline">
+                LAUNCH SPACE ↗
+              </a>
+            </div>
+          </article>
+
+          <!-- Card 6: AI Platforms Suite (04_AI_Platforms) -->
+          <article class="bento-card neo-box neo-box-interactive rounded-2xl p-6 flex flex-col justify-between" data-category="ai">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between font-mono text-[11px]">
+                <span class="px-2.5 py-0.5 rounded neo-elevated font-bold">04_AI_Platforms</span>
+                <span style="color: var(--text-secondary);">OpenRouter / Agents</span>
+              </div>
+              <h3 class="font-display font-bold text-xl">NikssGenAI v2, Meow_chan & Albedo</h3>
+              <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">
+                Lightweight browser AI platforms (`NikssGenAI`, `NikssGenAI_v2`, `NikssGenAI_Meow`, `NikssGen`) and specialized persona bots (`Meow_chan_AI`, `Albedo_Bot`) delivering fast multi-model streaming without build bloat.
+              </p>
+            </div>
+            <div class="pt-5 mt-5 border-t flex items-center justify-between font-mono text-xs" style="border-color: var(--border-color);">
+              <span style="color: var(--text-muted);">6 Platform Modules</span>
+              <button onclick="switchVaultView('tree'); selectTreeNode('04_AI_Platforms')" class="font-bold accent-text hover:underline">
+                INSPECT TREE →
+              </button>
+            </div>
+          </article>
+
+          <!-- Card 7: Websites & OS (05_Websites_and_Portfolio) -->
+          <article class="bento-card neo-box neo-box-interactive rounded-2xl p-6 flex flex-col justify-between" data-category="web">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between font-mono text-[11px]">
+                <span class="px-2.5 py-0.5 rounded neo-elevated font-bold">05_Websites</span>
+                <span style="color: var(--text-secondary);">Zero-Build Web OS</span>
+              </div>
+              <h3 class="font-display font-bold text-xl">Nikssxelo OS, Portfolio & Kycl</h3>
+              <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">
+                Modular browser-based desktop operating system (`Nikssxelo_OS`) with window management, terminal simulation, `Kycl`, and Rosie Web (Instagram Direct-style chat client).
+              </p>
+            </div>
+            <div class="pt-5 mt-5 border-t flex items-center justify-between font-mono text-xs" style="border-color: var(--border-color);">
+              <span style="color: var(--text-muted);">Pure HTML/JS/Tailwind</span>
+              <button onclick="switchVaultView('tree'); selectTreeNode('05_Websites_and_Portfolio')" class="font-bold accent-text hover:underline">
+                INSPECT TREE →
+              </button>
+            </div>
+          </article>
+
+          <!-- Card 8: Android & Gaming (03_Android_and_Gaming) -->
+          <article class="bento-card neo-box neo-box-interactive rounded-2xl p-6 flex flex-col justify-between" data-category="gaming">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between font-mono text-[11px]">
+                <span class="px-2.5 py-0.5 rounded neo-elevated font-bold">03_Android_and_Gaming</span>
+                <span style="color: var(--text-secondary);">Mobile & Shell</span>
+              </div>
+              <h3 class="font-display font-bold text-xl">GameBridge, GTA Browser & OpenClaude</h3>
+              <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">
+                Experimental Android & browser runtime utilities including `GameBridge`, `GTA_Browser_Experiments`, `OpenClaude_Android`, and upstream shell forks (`Dextop_Contributions`).
+              </p>
+            </div>
+            <div class="pt-5 mt-5 border-t flex items-center justify-between font-mono text-xs" style="border-color: var(--border-color);">
+              <span style="color: var(--text-muted);">4 Systems Experiments</span>
+              <button onclick="switchVaultView('tree'); selectTreeNode('03_Android_and_Gaming')" class="font-bold accent-text hover:underline">
+                INSPECT TREE →
+              </button>
+            </div>
+          </article>
+
+          <!-- Card 9: Creative, Music & Other Experiments (06 & 07) -->
+          <article class="bento-card neo-box neo-box-interactive rounded-2xl p-6 flex flex-col justify-between" data-category="creative">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between font-mono text-[11px]">
+                <span class="px-2.5 py-0.5 rounded crimson-bg font-bold">06_Creative & 07_Exp</span>
+                <span style="color: var(--text-secondary);">Spotify & Custom Builds</span>
+              </div>
+              <h3 class="font-display font-bold text-xl">Nikssxelo Music, For_Her & PW</h3>
+              <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">
+                Original Spotify releases (*Hopeless Romantic*, *Deja vu (Extended)*, *How This Will End?*, *December*), `Branding_and_Artwork`, `Rosie_Projects`, plus `For_Her` and `PhysicsWallah` builds.
+              </p>
+            </div>
+            <div class="pt-5 mt-5 border-t flex items-center justify-between font-mono text-xs" style="border-color: var(--border-color);">
+              <span style="color: var(--text-muted);">Spotify + Custom Apps</span>
+              <a href="https://open.spotify.com/artist/5L1h09U0kX5xI6f20R8h8E" target="_blank" rel="noopener noreferrer" class="font-bold crimson-text hover:underline">
+                SPOTIFY PROFILE ↗
+              </a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+      <!-- ==================== MODE B: INTERACTIVE 01-07 DIRECTORY TREE VIEW ==================== -->
+      <div id="vault-tree-view" class="hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          
+          <!-- Left Tree Explorer (7 Cols) -->
+          <div class="lg:col-span-7 neo-box rounded-2xl p-5 sm:p-6 font-mono text-xs space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b" style="border-color: var(--border-color);">
+              <div class="flex items-center gap-2 font-bold">
+                <i class="fa-solid fa-folder-open accent-text"></i>
+                <span>NIKSSXELO_PROJECTS/</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <button onclick="expandAllTree(true)" class="px-2 py-1 rounded neo-elevated text-[10px] hover:underline">Expand All</button>
+                <button onclick="expandAllTree(false)" class="px-2 py-1 rounded neo-elevated text-[10px] hover:underline">Collapse All</button>
+              </div>
+            </div>
+
+            <!-- Interactive Tree Container Rendered via JS -->
+            <div id="directory-tree-root" class="space-y-2 max-h-[540px] overflow-y-auto pr-2"></div>
+          </div>
+
+          <!-- Right Node Inspector Panel (5 Cols) -->
+          <div class="lg:col-span-5 neo-box rounded-2xl p-6 flex flex-col justify-between space-y-6">
+            <div class="space-y-4">
+              <div class="flex items-center justify-between font-mono text-xs border-b pb-3" style="border-color: var(--border-color); color: var(--text-secondary);">
+                <span>NODE INSPECTOR</span>
+                <span id="inspector-branch-id" class="accent-text font-bold">01_Rosie_AI</span>
+              </div>
+
+              <div class="space-y-2">
+                <div id="inspector-type-badge" class="inline-block px-2.5 py-0.5 rounded font-mono text-[10px] font-bold accent-bg">
+                  PRIMARY AI ECOSYSTEM
+                </div>
+                <h3 id="inspector-title" class="font-display font-extrabold text-2xl sm:text-3xl">01_Rosie_AI</h3>
+                <p id="inspector-desc" class="text-xs sm:text-sm leading-relaxed" style="color: var(--text-secondary);">
+                  Click any branch or sub-project node inside the directory tree to inspect its technical architecture, submodules, and live deployment links.
+                </p>
+              </div>
+
+              <!-- Submodules List -->
+              <div class="space-y-2 pt-2">
+                <div class="font-mono text-[11px] uppercase tracking-wider" style="color: var(--text-muted);">Included Artifacts & Modules:</div>
+                <div id="inspector-children" class="flex flex-wrap gap-1.5"></div>
+              </div>
+            </div>
+
+            <div id="inspector-links" class="pt-4 border-t flex flex-wrap gap-2" style="border-color: var(--border-color);">
+              <a href="https://t.me/rosie_daisybot" target="_blank" rel="noopener noreferrer" class="neo-btn-primary px-4 py-2 rounded-lg font-mono text-xs">
+                Open @rosie_daisybot ↗
+              </a>
+              <a href="https://huggingface.co/Nikssxelo123/ROSIE-test-1" target="_blank" rel="noopener noreferrer" class="neo-btn-secondary px-4 py-2 rounded-lg font-mono text-xs">
+                ROSIE-test-1 ↗
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         04 // SONIC LAB (TACTILE HARDWARE STUDIO TAPE / VINYL DECK)
+         ===================================================================== -->
+    <section id="sonic-lab" class="space-y-6">
+      <div class="flex items-center justify-between border-b pb-3 font-mono text-xs" style="border-color: var(--border-color); color: var(--text-secondary);">
+        <span>[04 // SONIC LAB — INDEPENDENT DISCOGRAPHY & MASTERING DECK]</span>
+        <span>SPOTIFY // NIKSSXELO</span>
+      </div>
+
+      <!-- Hidden Native HTML5 Audio Engine -->
+      <audio id="nativeAudio" preload="metadata" crossorigin="anonymous"></audio>
+
+      <div class="neo-box rounded-2xl p-6 sm:p-8 lg:p-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          
+          <!-- Left: Spinning Vinyl Deck + Hardware Equalizer (7 Cols) -->
+          <div class="lg:col-span-7 space-y-6">
+            
+            <!-- Top Deck Status Bar -->
+            <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b" style="border-color: var(--border-color);">
+              <div class="flex items-center gap-2.5">
+                <span id="deck-led" class="w-3 h-3 rounded-full bg-amber-400"></span>
+                <span id="player-status-badge" class="font-mono text-xs font-bold tracking-wider">DECK READY // STANDBY</span>
+              </div>
+
+              <!-- 12-Bar Hardware Equalizer -->
+              <div id="audio-equalizer" class="flex items-end gap-1 h-6 px-3 py-1 rounded neo-elevated">
+                <span class="eq-bar w-1 accent-bg rounded-sm"></span>
+                <span class="eq-bar w-1 crimson-bg rounded-sm"></span>
+                <span class="eq-bar w-1 accent-bg rounded-sm"></span>
+                <span class="eq-bar w-1 crimson-bg rounded-sm"></span>
+                <span class="eq-bar w-1 accent-bg rounded-sm"></span>
+                <span class="eq-bar w-1 crimson-bg rounded-sm"></span>
+                <span class="eq-bar w-1 accent-bg rounded-sm"></span>
+                <span class="eq-bar w-1 crimson-bg rounded-sm"></span>
+                <span class="eq-bar w-1 accent-bg rounded-sm"></span>
+                <span class="eq-bar w-1 crimson-bg rounded-sm"></span>
+                <span class="eq-bar w-1 accent-bg rounded-sm"></span>
+                <span class="eq-bar w-1 crimson-bg rounded-sm"></span>
+              </div>
+            </div>
+
+            <!-- Platter + Active Track Metadata -->
+            <div class="flex flex-col sm:flex-row items-center gap-6">
+              <!-- Tactile Vinyl Disc -->
+              <div class="relative w-32 h-32 sm:w-36 sm:h-36 shrink-0">
+                <div id="vinyl-disc" class="vinyl-spin w-full h-full rounded-full border-4 flex items-center justify-center relative shadow-xl"
+                     style="background: radial-gradient(circle, #1f2430 0%, #090a0f 65%, #181a24 70%, #050507 100%); border-color: var(--border-strong);">
+                  <!-- Vinyl Grooves -->
+                  <div class="absolute inset-3 rounded-full border border-white/10 pointer-events-none"></div>
+                  <div class="absolute inset-6 rounded-full border border-white/10 pointer-events-none"></div>
+                  <div class="absolute inset-9 rounded-full border border-white/10 pointer-events-none"></div>
+                  <!-- Center Record Label with Official Brand Logo -->
+                  <div class="w-14 h-14 rounded-full overflow-hidden flex items-center justify-center border-2 relative"
+                       style="border-color: var(--accent-primary);">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNR_K-T561-lJE5G_IHWrK5l1J9HRnSKJMcw&s"
+                         alt="Nikssxelo Vinyl Label"
+                         onerror="this.onerror=null;this.src='https://placehold.co/100x100/d4ff00/070709?text=NX';"
+                         class="w-full h-full object-cover">
+                    <div class="w-3 h-3 rounded-full bg-black border border-white/40 absolute"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Track Title & Details -->
+              <div class="space-y-2 text-center sm:text-left flex-1">
+                <div class="font-mono text-xs uppercase tracking-widest accent-text font-semibold" id="current-track-tag">
+                  TRACK 01 // ORIGINAL SINGLE
+                </div>
+                <h3 id="current-track-title" class="font-display font-extrabold text-3xl sm:text-4xl tracking-tight">
+                  Hopeless Romantic
+                </h3>
+                <p id="current-track-artist" class="font-mono text-xs" style="color: var(--text-secondary);">
+                  Nikssxelo • Indie / Lo-Fi Bedroom Pop
+                </p>
+                <div class="pt-1 flex flex-wrap items-center justify-center sm:justify-start gap-3">
+                  <a id="current-track-link" href="https://open.spotify.com/track/0el2XBNQCtAMwJtEWNv5Rl" target="_blank" rel="noopener noreferrer"
+                     class="inline-flex items-center gap-1.5 font-mono text-xs text-emerald-400 hover:underline font-semibold">
+                    <i class="fa-brands fa-spotify"></i>
+                    <span>Stream Full Master on Spotify ↗</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Interactive Scrub Timeline -->
+            <div class="space-y-2 pt-2">
+              <div id="scrub-container" onclick="seekPlayer(event)"
+                   class="w-full h-3.5 rounded-lg neo-elevated overflow-hidden cursor-pointer relative p-0.5">
+                <div id="player-progress" class="h-full w-0 rounded accent-bg transition-[width] duration-100"></div>
+              </div>
+              <div class="flex items-center justify-between font-mono text-xs" style="color: var(--text-secondary);">
+                <span id="player-current-time">0:00</span>
+                <span id="player-status-text" class="text-[11px]">Click Play to audition stream</span>
+                <span id="player-duration">0:00</span>
+              </div>
+            </div>
+
+            <!-- Hardware Transport Controls + Local Audio & URL Loader -->
+            <div class="flex flex-wrap items-center justify-between gap-4 pt-2">
+              <div class="flex items-center gap-2.5">
+                <button onclick="prevTrack()" title="Previous Track" class="neo-btn-secondary w-11 h-11 rounded-xl flex items-center justify-center">
+                  <i class="fa-solid fa-backward-step"></i>
+                </button>
+                <button onclick="toggleMusicPlay()" id="play-pause-btn" title="Play / Pause" class="neo-btn-primary w-14 h-12 rounded-xl flex items-center justify-center text-base">
+                  <i class="fa-solid fa-play" id="play-icon"></i>
+                </button>
+                <button onclick="nextTrack()" title="Next Track" class="neo-btn-secondary w-11 h-11 rounded-xl flex items-center justify-center">
+                  <i class="fa-solid fa-forward-step"></i>
+                </button>
+              </div>
+
+              <!-- Volume & Custom Audio Loader -->
+              <div class="flex flex-wrap items-center gap-2.5">
+                <div class="neo-elevated px-3 py-2 rounded-xl flex items-center gap-2">
+                  <button onclick="toggleMute()" id="mute-btn" class="text-xs">
+                    <i class="fa-solid fa-volume-high" id="volume-icon"></i>
+                  </button>
+                  <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.85" oninput="adjustVolume(this.value)"
+                         class="w-16 h-1.5 accent-current cursor-pointer">
+                </div>
+
+                <!-- Upload Local Audio File -->
+                <label for="customAudioInput" class="neo-btn-secondary px-3.5 py-2 rounded-xl font-mono text-xs cursor-pointer flex items-center gap-1.5">
+                  <i class="fa-solid fa-file-audio accent-text"></i>
+                  <span>Load Audio</span>
+                </label>
+                <input type="file" id="customAudioInput" accept="audio/*" class="hidden" onchange="loadCustomLocalAudio(event)">
+
+                <!-- Toggle Inline Stream URL Drawer -->
+                <button onclick="toggleUrlDrawer()" class="neo-btn-secondary px-3 py-2 rounded-xl font-mono text-xs flex items-center gap-1">
+                  <i class="fa-solid fa-link crimson-text"></i>
+                  <span>+ URL</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Inline Custom Stream URL Input Drawer (No browser prompt/alert!) -->
+            <div id="url-stream-drawer" class="hidden neo-elevated p-3.5 rounded-xl space-y-2">
+              <div class="font-mono text-[11px]" style="color: var(--text-secondary);">PASTE DIRECT AUDIO STREAM URL (.MP3 / .WAV / .OGG):</div>
+              <div class="flex gap-2">
+                <input type="url" id="custom-stream-url-input" placeholder="https://example.com/track.mp3"
+                       class="flex-1 px-3 py-1.5 rounded-lg font-mono text-xs border bg-transparent focus:outline-none" style="border-color: var(--border-color);">
+                <button onclick="loadCustomUrlStream()" class="neo-btn-primary px-4 py-1.5 rounded-lg font-mono text-xs">
+                  Load Stream
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right: Discography Playlist Selector (5 Cols) -->
+          <div class="lg:col-span-5 space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs pb-2 border-b" style="border-color: var(--border-color); color: var(--text-secondary);">
+              <span>OFFICIAL DISCOGRAPHY CRATE</span>
+              <a href="https://open.spotify.com/artist/5L1h09U0kX5xI6f20R8h8E" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:underline">
+                Artist Profile ↗
+              </a>
+            </div>
+
+            <!-- Track 01: Hopeless Romantic -->
+            <div id="track-row-0" onclick="selectTrack(0)"
+                 class="track-row neo-elevated p-4 rounded-xl cursor-pointer flex items-center justify-between gap-3 transition-all border-2"
+                 style="border-color: var(--accent-primary);">
+              <div class="flex items-center gap-3.5">
+                <span class="w-8 h-8 rounded-lg accent-bg font-mono text-xs font-bold flex items-center justify-center">01</span>
+                <div>
+                  <div class="font-display font-bold text-base">Hopeless Romantic</div>
+                  <div class="font-mono text-[11px]" style="color: var(--text-secondary);">Original Single • Lo-Fi Pop Textures</div>
+                </div>
+              </div>
+              <a href="https://open.spotify.com/track/0el2XBNQCtAMwJtEWNv5Rl" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"
+                 title="Open on Spotify" class="px-2.5 py-1.5 rounded-lg neo-box font-mono text-[11px] text-emerald-400 hover:underline flex items-center gap-1">
+                <i class="fa-brands fa-spotify"></i>
+                <span>Spotify</span>
+              </a>
+            </div>
+
+            <!-- Track 02: Deja vu (Extended) -->
+            <div id="track-row-1" onclick="selectTrack(1)"
+                 class="track-row neo-elevated p-4 rounded-xl cursor-pointer flex items-center justify-between gap-3 transition-all">
+              <div class="flex items-center gap-3.5">
+                <span class="w-8 h-8 rounded-lg neo-box font-mono text-xs font-bold flex items-center justify-center">02</span>
+                <div>
+                  <div class="font-display font-bold text-base">Deja vu (Extended)</div>
+                  <div class="font-mono text-[11px]" style="color: var(--text-secondary);">Extended Arrangement • Layered Guitars</div>
+                </div>
+              </div>
+              <a href="https://open.spotify.com/album/51t16UJeCihlsRAiJD736w" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"
+                 title="Open on Spotify" class="px-2.5 py-1.5 rounded-lg neo-box font-mono text-[11px] text-emerald-400 hover:underline flex items-center gap-1">
+                <i class="fa-brands fa-spotify"></i>
+                <span>Spotify</span>
+              </a>
+            </div>
+
+            <!-- Track 03: How This Will End? -->
+            <div id="track-row-2" onclick="selectTrack(2)"
+                 class="track-row neo-elevated p-4 rounded-xl cursor-pointer flex items-center justify-between gap-3 transition-all">
+              <div class="flex items-center gap-3.5">
+                <span class="w-8 h-8 rounded-lg neo-box font-mono text-xs font-bold flex items-center justify-center">03</span>
+                <div>
+                  <div class="font-display font-bold text-base">How This Will End?</div>
+                  <div class="font-mono text-[11px]" style="color: var(--text-secondary);">Atmospheric Alt-Pop • Acoustic Progressions</div>
+                </div>
+              </div>
+              <a href="https://open.spotify.com/album/5Khtgg8KBJjb4Gn8mF6ijg" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"
+                 title="Open on Spotify" class="px-2.5 py-1.5 rounded-lg neo-box font-mono text-[11px] text-emerald-400 hover:underline flex items-center gap-1">
+                <i class="fa-brands fa-spotify"></i>
+                <span>Spotify</span>
+              </a>
+            </div>
+
+            <div class="p-3.5 rounded-xl border border-dashed font-mono text-[11px] flex items-center justify-between" style="border-color: var(--border-color); color: var(--text-secondary);">
+              <span>Additional archive release: <strong>December</strong></span>
+              <span>06_Creative/Nikssxelo_Music</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         05 // GET IN TOUCH & COMPLAINTS DISPATCH DESK (Nikssxelo@gmail.com)
+         ===================================================================== -->
+    <section id="complaints-desk" class="space-y-6">
+      <div class="flex items-center justify-between border-b pb-3 font-mono text-xs" style="border-color: var(--border-color); color: var(--text-secondary);">
+        <span>[05 // GET IN TOUCH & COMPLAINTS DISPATCH DESK]</span>
+        <span>DIRECT ROUTING // Nikssxelo@gmail.com</span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Left: Complaint & Inquiry Ticket Form (7 Cols) -->
+        <div class="lg:col-span-7 neo-box rounded-2xl p-6 sm:p-8 space-y-6">
+          <div class="space-y-2">
+            <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded font-mono text-[11px] font-bold crimson-bg">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+              <span>OFFICIAL COMPLAINT & FEEDBACK TERMINAL</span>
+            </div>
+            <h2 class="font-display font-extrabold text-3xl sm:text-4xl tracking-tight">
+              Submit a Complaint or Inquiry
+            </h2>
+            <p class="text-xs sm:text-sm leading-relaxed" style="color: var(--text-secondary);">
+              All complaints, Rosie AI bot reports, RVC model issues, and collaboration inquiries are formatted and dispatched directly to <strong class="font-mono accent-text">Nikssxelo@gmail.com</strong>.
+            </p>
+          </div>
+
+          <form id="complaint-form" onsubmit="handleComplaintSubmit(event)" class="space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block font-mono text-xs mb-1.5" style="color: var(--text-secondary);">YOUR NAME / ALIAS *</label>
+                <input type="text" id="sender-name" required placeholder="e.g. Aryan / @handle" oninput="updateLiveTicketPreview()"
+                       class="w-full px-3.5 py-2.5 rounded-xl neo-elevated font-mono text-xs focus:outline-none">
+              </div>
+              <div>
+                <label class="block font-mono text-xs mb-1.5" style="color: var(--text-secondary);">YOUR EMAIL ADDRESS *</label>
+                <input type="email" id="sender-email" required placeholder="you@domain.com" oninput="updateLiveTicketPreview()"
+                       class="w-full px-3.5 py-2.5 rounded-xl neo-elevated font-mono text-xs focus:outline-none">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block font-mono text-xs mb-1.5" style="color: var(--text-secondary);">TICKET / COMPLAINT CATEGORY</label>
+                <select id="issue-category" onchange="updateLiveTicketPreview()"
+                        class="w-full px-3.5 py-2.5 rounded-xl neo-elevated font-mono text-xs focus:outline-none">
+                  <option value="Complaint / Bug Report">Complaint / Bug Report</option>
+                  <option value="Rosie AI Telegram Bot Issue">Rosie AI Telegram Bot Issue</option>
+                  <option value="Voice AI / RVC Model Feedback">Voice AI / RVC Model Feedback</option>
+                  <option value="Collaboration / Project Inquiry">Collaboration / Project Inquiry</option>
+                  <option value="Music & Licensing Inquiry">Music & Licensing Inquiry</option>
+                </select>
+              </div>
+
+              <!-- Priority Pill Selector -->
+              <div>
+                <label class="block font-mono text-xs mb-1.5" style="color: var(--text-secondary);">SEVERITY / PRIORITY</label>
+                <div class="grid grid-cols-3 gap-2">
+                  <button type="button" onclick="setPriority('NORMAL')" id="prio-NORMAL" class="prio-btn py-2 rounded-xl font-mono text-xs font-bold accent-bg">
+                    NORMAL
+                  </button>
+                  <button type="button" onclick="setPriority('HIGH')" id="prio-HIGH" class="prio-btn py-2 rounded-xl font-mono text-xs font-bold neo-elevated">
+                    HIGH
+                  </button>
+                  <button type="button" onclick="setPriority('URGENT')" id="prio-URGENT" class="prio-btn py-2 rounded-xl font-mono text-xs font-bold neo-elevated">
+                    URGENT
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <label class="block font-mono text-xs mb-1.5" style="color: var(--text-secondary);">COMPLAINT OR MESSAGE DETAILS *</label>
+              <textarea id="complaint-details" rows="4" required oninput="updateLiveTicketPreview()"
+                        placeholder="Describe your complaint, bot issue, or inquiry in detail..."
+                        class="w-full px-3.5 py-2.5 rounded-xl neo-elevated font-mono text-xs focus:outline-none resize-none"></textarea>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-3 pt-2">
+              <button type="submit" class="neo-btn-primary px-6 py-3 rounded-xl font-mono text-xs uppercase tracking-wider flex items-center gap-2">
+                <i class="fa-solid fa-paper-plane"></i>
+                <span>Dispatch to Nikssxelo@gmail.com</span>
+              </button>
+
+              <button type="button" onclick="copyFormattedTicket()" class="neo-btn-secondary px-4 py-3 rounded-xl font-mono text-xs flex items-center gap-2">
+                <i class="fa-solid fa-clipboard-check accent-text"></i>
+                <span>Copy Ticket</span>
+              </button>
+
+              <button type="button" onclick="copyEmailDirectly()" class="neo-btn-secondary px-4 py-3 rounded-xl font-mono text-xs flex items-center gap-2">
+                <i class="fa-solid fa-copy"></i>
+                <span>Copy Email</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Right: Live Dispatch Ticket Preview & Social Channels (5 Cols) -->
+        <div class="lg:col-span-5 flex flex-col justify-between gap-6">
+          
+          <!-- Live Formatted Ticket Preview -->
+          <div class="neo-box rounded-2xl p-6 font-mono text-xs space-y-4">
+            <div class="flex items-center justify-between border-b pb-2.5" style="border-color: var(--border-color);">
+              <span class="font-bold accent-text">// LIVE DISPATCH PAYLOAD</span>
+              <span id="preview-prio-badge" class="px-2 py-0.5 rounded text-[10px] accent-bg font-bold">PRIORITY: NORMAL</span>
+            </div>
+
+            <div class="space-y-2 text-[11px]" style="color: var(--text-secondary);">
+              <div><strong>TO:</strong> <span style="color: var(--text-primary);">Nikssxelo@gmail.com</span></div>
+              <div><strong>FROM:</strong> <span id="preview-sender" style="color: var(--text-primary);">anonymous@user</span></div>
+              <div><strong>CATEGORY:</strong> <span id="preview-category" style="color: var(--text-primary);">Complaint / Bug Report</span></div>
+            </div>
+
+            <div id="preview-body" class="p-3.5 rounded-xl neo-elevated text-[11px] leading-relaxed min-h-[90px] whitespace-pre-wrap" style="color: var(--text-primary);">Awaiting complaint or inquiry input...</div>
+          </div>
+
+          <!-- Complete Socials Matrix -->
+          <div class="neo-box rounded-2xl p-6 space-y-4">
+            <div class="font-mono text-xs font-bold uppercase tracking-wider">// Direct Social Transmissions</div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 font-mono text-xs">
+              <a href="https://www.youtube.com/@nikssxelo-psychosis" target="_blank" rel="noopener noreferrer"
+                 class="neo-elevated p-3 rounded-xl flex items-center justify-between hover:border-current transition-colors">
+                <span class="flex items-center gap-2">
+                  <i class="fa-brands fa-youtube text-red-500"></i>
+                  <span>@nikssxelo-psychosis</span>
+                </span>
+                <span>↗</span>
+              </a>
+
+              <a href="https://www.instagram.com/nikss.codes/" target="_blank" rel="noopener noreferrer"
+                 class="neo-elevated p-3 rounded-xl flex items-center justify-between hover:border-current transition-colors">
+                <span class="flex items-center gap-2">
+                  <i class="fa-brands fa-instagram crimson-text"></i>
+                  <span>@nikss.codes</span>
+                </span>
+                <span>↗</span>
+              </a>
+
+              <a href="https://huggingface.co/Nikssxelo123" target="_blank" rel="noopener noreferrer"
+                 class="neo-elevated p-3 rounded-xl flex items-center justify-between hover:border-current transition-colors">
+                <span class="flex items-center gap-2">
+                  <span>🤗</span>
+                  <span>Nikssxelo123</span>
+                </span>
+                <span>↗</span>
+              </a>
+
+              <a href="https://open.spotify.com/artist/5L1h09U0kX5xI6f20R8h8E" target="_blank" rel="noopener noreferrer"
+                 class="neo-elevated p-3 rounded-xl flex items-center justify-between hover:border-current transition-colors">
+                <span class="flex items-center gap-2">
+                  <i class="fa-brands fa-spotify text-emerald-400"></i>
+                  <span>Nikssxelo Spotify</span>
+                </span>
+                <span>↗</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== ARCHITECTURAL FOOTER ==================== -->
+  <footer class="mt-24 border-t-[1.5px] py-12 font-mono text-xs" style="background-color: var(--bg-secondary); border-color: var(--border-color); color: var(--text-secondary);">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg overflow-hidden border-[1.5px] shrink-0"
+             style="border-color: var(--accent-primary); box-shadow: 2px 2px 0px 0px var(--border-strong);">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNR_K-T561-lJE5G_IHWrK5l1J9HRnSKJMcw&s"
+               alt="Nikssxelo Productions Logo"
+               onerror="this.onerror=null;this.src='https://placehold.co/100x100/d4ff00/070709?text=NX';"
+               class="w-full h-full object-cover">
+        </div>
+        <!-- Strictly Preserved Copyright Notice -->
+        <span class="font-bold text-sm" style="color: var(--text-primary);">© Nikssxelo productions</span>
+      </div>
+      <div class="flex flex-wrap items-center gap-4 text-[11px]">
+        <a href="https://t.me/rosie_daisybot" target="_blank" rel="noopener noreferrer" class="hover:underline">Telegram: @rosie_daisybot</a>
+        <span>•</span>
+        <a href="https://www.youtube.com/@nikssxelo-psychosis" target="_blank" rel="noopener noreferrer" class="hover:underline">YouTube: @nikssxelo-psychosis</a>
+        <span>•</span>
+        <a href="https://www.instagram.com/nikss.codes/" target="_blank" rel="noopener noreferrer" class="hover:underline">IG: @nikss.codes</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== APPLICATION SCRIPTS ==================== -->
+  <script>
+    // =========================================================================
+    // 1. MULTI-THEME ENGINE (Obsidian / Editorial Paper / Cyber Monochrome)
+    // =========================================================================
+    function setTheme(themeName) {
+      document.documentElement.setAttribute('data-theme', themeName);
+      const themes = ['obsidian', 'paper', 'monochrome'];
+      themes.forEach(t => {
+        const btn = document.getElementById('theme-' + t);
+        if (!btn) return;
+        if (t === themeName) {
+          btn.classList.add('accent-bg');
+          btn.style.color = '';
+        } else {
+          btn.classList.remove('accent-bg');
+          btn.style.color = 'var(--text-secondary)';
+        }
+      });
+      showToast('Theme switched to ' + themeName.toUpperCase());
+    }
+
+    // =========================================================================
+    // 2. ROSIE AI INTERACTIVE CHAT PREVIEW SIMULATOR
+    // =========================================================================
+    const rosieResponses = {
+      'Sing me a line from Nikssxelo music!': '🎶 "Hopeless romantic, lost in the static..." Listen to Nikssxelo\'s tracks in the Sonic Lab below or chat with me live on Telegram (@rosie_daisybot)!',
+      'How does your memory system work?': 'I combine Qwen2 PEFT/LoRA conversational weights (ROSIE-test-1 & ROSIE-test-2) with an agentic context memory layer and RVC voice synthesis!',
+      'Love like this sets our hearts on fire..': '🔥 Always and forever! Click "Chat on Telegram" to talk to me directly on @rosie_daisybot ❤️'
+    };
+
+    function sendRosiePreview(promptText) {
+      const feed = document.getElementById('rosie-chat-feed');
+      if (!feed) return;
+
+      // Append User Bubble
+      const userWrap = document.createElement('div');
+      userWrap.className = 'flex flex-col items-end ml-auto max-w-[80%]';
+      userWrap.innerHTML = `
+        <div class="px-3.5 py-2 rounded-2xl rounded-tr-none accent-bg font-medium">${promptText}</div>
+        <span class="font-mono text-[9px] mt-1" style="color: var(--text-muted);">You • Just now</span>
+      `;
+      feed.appendChild(userWrap);
+      feed.scrollTop = feed.scrollHeight;
+
+      // Append Rosie Response
+      setTimeout(() => {
+        const reply = rosieResponses[promptText] || 'Chalo Telegram pe baatein karte hain! Join me at t.me/rosie_daisybot ✨';
+        const botWrap = document.createElement('div');
+        botWrap.className = 'flex flex-col items-start max-w-[85%]';
+        botWrap.innerHTML = `
+          <div class="px-3.5 py-2.5 rounded-2xl rounded-tl-none neo-elevated">${reply}</div>
+          <span class="font-mono text-[9px] mt-1" style="color: var(--text-muted);">Rosie • @rosie_daisybot</span>
+        `;
+        feed.appendChild(botWrap);
+        feed.scrollTop = feed.scrollHeight;
+      }, 320);
+    }
+
+    // =========================================================================
+    // 3. DUAL-MODE PROJECT VAULT (Bento Filter + 01-07 Directory Tree Explorer)
+    // =========================================================================
+    const directoryTreeData = [
+      {
+        id: '01_Rosie_AI',
+        tag: 'FLAGSHIP AI ECOSYSTEM',
+        desc: 'End-to-end conversational companion ecosystem spanning Qwen2 LoRA fine-tunes, training datasets, vision comprehension, RVC/TTS voice pipelines, long-term memory agents, and omnichannel social bridges.',
+        links: [
+          { label: 'Telegram Bot (@rosie_daisybot)', url: 'https://t.me/rosie_daisybot' },
+          { label: 'ROSIE-test-1 (HF)', url: 'https://huggingface.co/Nikssxelo123/ROSIE-test-1' },
+          { label: 'ROSIE-test-2 (HF)', url: 'https://huggingface.co/Nikssxelo123/ROSIE-test-2' },
+          { label: 'rosie-rvc-model (HF)', url: 'https://huggingface.co/Nikssxelo123/rosie-rvc-model' }
+        ],
+        children: [
+          'Main_Chatbot',
+          'Base_Models_and_LoRA (ROSIE-test-1, ROSIE-test-2)',
+          'Training_Dataset',
+          'Vision_AI',
+          'RVC_and_TTS (rosie-rvc-model)',
+          'Memory_and_Agent',
+          'Telegram (t.me/rosie_daisybot)',
+          'Instagram',
+          'WhatsApp',
+          'Rosie_Web'
+        ]
+      },
+      {
+        id: '02_Voice_AI',
+        tag: 'VOICE CLONING & ZEROGPU',
+        desc: 'Cloud and local Retrieval-based Voice Conversion (RVC) architectures built on Applio and serverless Hugging Face ZeroGPU Docker environments.',
+        links: [
+          { label: 'Applio-ZeroGPU Space', url: 'https://huggingface.co/spaces/Nikssxelo123/Applio-ZeroGPU' },
+          { label: 'rosie-rvc-model', url: 'https://huggingface.co/Nikssxelo123/rosie-rvc-model' }
+        ],
+        children: [
+          'Applio',
+          'Applio_ZeroGPU (HF Space)',
+          'applio_RVC (Docker Environment)',
+          'Voice_Model_Experiments'
+        ]
+      },
+      {
+        id: '03_Android_and_Gaming',
+        tag: 'MOBILE & RUNTIME SYSTEMS',
+        desc: 'Experimental Android clients, browser-based game engines, and desktop shell environment contributions.',
+        links: [
+          { label: 'Hugging Face Profile', url: 'https://huggingface.co/Nikssxelo123' }
+        ],
+        children: [
+          'GameBridge',
+          'GTA_Browser_Experiments',
+          'OpenClaude_Android',
+          'Dextop_Contributions'
+        ]
+      },
+      {
+        id: '04_AI_Platforms',
+        tag: 'ZERO-BUILD AI CLIENTS',
+        desc: 'Lightweight single-file browser AI consoles and specialized persona bots powered by OpenRouter streaming APIs.',
+        links: [
+          { label: 'Hugging Face Hub', url: 'https://huggingface.co/Nikssxelo123' }
+        ],
+        children: [
+          'NikssGenAI',
+          'NikssGenAI_v2',
+          'NikssGenAI_Meow',
+          'NikssGen',
+          'Meow_chan_AI',
+          'Albedo_Bot'
+        ]
+      },
+      {
+        id: '05_Websites_and_Portfolio',
+        tag: 'WEB OS & INTERFACES',
+        desc: 'Browser-based desktop operating system (Nikssxelo_OS) with movable windows, terminal emulation, Kycl, and portfolio architecture.',
+        links: [
+          { label: 'Instagram (@nikss.codes)', url: 'https://www.instagram.com/nikss.codes/' }
+        ],
+        children: [
+          'Nikssxelo_OS',
+          'Portfolio',
+          'Kycl'
+        ]
+      },
+      {
+        id: '06_Creative',
+        tag: 'MUSIC & VISUAL DIRECTION',
+        desc: 'Independent music production on Spotify alongside visual identity and Rosie creative direction.',
+        links: [
+          { label: 'Hopeless Romantic (Spotify)', url: 'https://open.spotify.com/track/0el2XBNQCtAMwJtEWNv5Rl' },
+          { label: 'Deja vu Extended (Spotify)', url: 'https://open.spotify.com/album/51t16UJeCihlsRAiJD736w' },
+          { label: 'How This Will End? (Spotify)', url: 'https://open.spotify.com/album/5Khtgg8KBJjb4Gn8mF6ijg' }
+        ],
+        children: [
+          'Nikssxelo_Music (Hopeless Romantic, Deja vu, How This Will End?, December)',
+          'Rosie_Projects',
+          'Branding_and_Artwork'
+        ]
+      },
+      {
+        id: '07_Other_Experiments',
+        tag: 'SPECIAL BUILDS',
+        desc: 'Dedicated experimental web builds, interactive micro-experiences, and utility projects.',
+        links: [
+          { label: 'YouTube (@nikssxelo-psychosis)', url: 'https://www.youtube.com/@nikssxelo-psychosis' }
+        ],
+        children: [
+          'For_Her',
+          'PhysicsWallah'
+        ]
+      }
+    ];
+
+    function switchVaultView(mode) {
+      const bentoView = document.getElementById('vault-bento-view');
+      const treeView = document.getElementById('vault-tree-view');
+      const bentoBtn = document.getElementById('view-bento-btn');
+      const treeBtn = document.getElementById('view-tree-btn');
+
+      if (mode === 'bento') {
+        bentoView.classList.remove('hidden');
+        treeView.classList.add('hidden');
+        bentoBtn.classList.add('accent-bg');
+        bentoBtn.style.color = '';
+        treeBtn.classList.remove('accent-bg');
+        treeBtn.style.color = 'var(--text-secondary)';
+      } else {
+        bentoView.classList.add('hidden');
+        treeView.classList.remove('hidden');
+        treeBtn.classList.add('accent-bg');
+        treeBtn.style.color = '';
+        bentoBtn.classList.remove('accent-bg');
+        bentoBtn.style.color = 'var(--text-secondary)';
+      }
+    }
+
+    function filterBento(category) {
+      document.querySelectorAll('.bento-filter-btn').forEach(btn => {
+        if (btn.getAttribute('data-filter') === category) {
+          btn.classList.add('accent-bg');
+          btn.classList.remove('neo-elevated');
+        } else {
+          btn.classList.remove('accent-bg');
+          btn.classList.add('neo-elevated');
+        }
+      });
+
+      document.querySelectorAll('.bento-card').forEach(card => {
+        const cardCat = card.getAttribute('data-category');
+        if (category === 'all' || cardCat === category) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function renderDirectoryTree() {
+      const root = document.getElementById('directory-tree-root');
+      if (!root) return;
+      root.innerHTML = '';
+
+      directoryTreeData.forEach(branch => {
+        const branchEl = document.createElement('div');
+        branchEl.className = 'neo-elevated rounded-xl overflow-hidden';
+        branchEl.innerHTML = `
+          <div class="px-3.5 py-2.5 flex items-center justify-between cursor-pointer hover:opacity-90"
+               onclick="selectTreeNode('${branch.id}')">
+            <div class="flex items-center gap-2 font-bold">
+              <i class="fa-solid fa-folder-tree accent-text"></i>
+              <span>|-- ${branch.id}</span>
+            </div>
+            <span class="text-[10px] px-2 py-0.5 rounded border" style="border-color: var(--border-color); color: var(--text-secondary);">
+              ${branch.children.length} items
+            </span>
+          </div>
+          <div id="tree-children-${branch.id}" class="px-5 pb-3 pt-1 space-y-1 border-t" style="border-color: var(--border-color); color: var(--text-secondary);">
+            ${branch.children.map((child, idx) => `
+              <div onclick="selectTreeNode('${branch.id}')" class="cursor-pointer hover:underline py-0.5 flex items-center gap-2">
+                <span>${idx === branch.children.length - 1 ? '`--' : '|--'}</span>
+                <span style="color: var(--text-primary);">${child}</span>
+              </div>
+            `).join('')}
+          </div>
+        `;
+        root.appendChild(branchEl);
+      });
+    }
+
+    function selectTreeNode(branchId) {
+      const branch = directoryTreeData.find(b => b.id === branchId);
+      if (!branch) return;
+
+      document.getElementById('inspector-branch-id').innerText = branch.id;
+      document.getElementById('inspector-type-badge').innerText = branch.tag;
+      document.getElementById('inspector-title').innerText = branch.id;
+      document.getElementById('inspector-desc').innerText = branch.desc;
+
+      const childrenWrap = document.getElementById('inspector-children');
+      childrenWrap.innerHTML = branch.children.map(c => `
+        <span class="px-2.5 py-1 rounded-lg neo-elevated font-mono text-[11px]">${c}</span>
+      `).join('');
+
+      const linksWrap = document.getElementById('inspector-links');
+      linksWrap.innerHTML = branch.links.map((l, i) => `
+        <a href="${l.url}" target="_blank" rel="noopener noreferrer"
+           class="${i === 0 ? 'neo-btn-primary' : 'neo-btn-secondary'} px-3.5 py-2 rounded-lg font-mono text-xs">
+          ${l.label} ↗
+        </a>
+      `).join('');
+    }
+
+    function expandAllTree(expand) {
+      directoryTreeData.forEach(b => {
+        const el = document.getElementById('tree-children-' + b.id);
+        if (el) {
+          el.style.display = expand ? 'block' : 'none';
+        }
+      });
+    }
+
+    // =========================================================================
+    // 4. SONIC LAB HTML5 AUDIO ENGINE & DISCOGRAPHY DECK
+    // =========================================================================
+    const tracks = [
+      {
+        tag: 'TRACK 01 // ORIGINAL SINGLE',
+        title: 'Hopeless Romantic',
+        artist: 'Nikssxelo • Indie / Lo-Fi Bedroom Pop',
+        spotify: 'https://open.spotify.com/track/0el2XBNQCtAMwJtEWNv5Rl',
+        audioSrc: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
+      },
+      {
+        tag: 'TRACK 02 // EXTENDED ARRANGEMENT',
+        title: 'Deja vu (Extended)',
+        artist: 'Nikssxelo • Layered Guitars & Ambient Production',
+        spotify: 'https://open.spotify.com/album/51t16UJeCihlsRAiJD736w',
+        audioSrc: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3'
+      },
+      {
+        tag: 'TRACK 03 // ATMOSPHERIC ALT-POP',
+        title: 'How This Will End?',
+        artist: 'Nikssxelo • Introspective Acoustic Progressions',
+        spotify: 'https://open.spotify.com/album/5Khtgg8KBJjb4Gn8mF6ijg',
+        audioSrc: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3'
+      }
+    ];
+
+    let currentTrackIndex = 0;
+    const audio = document.getElementById('nativeAudio');
+    const playIcon = document.getElementById('play-icon');
+    const progressBar = document.getElementById('player-progress');
+    const currentTimeEl = document.getElementById('player-current-time');
+    const durationEl = document.getElementById('player-duration');
+    const playerStatusText = document.getElementById('player-status-text');
+    const statusBadge = document.getElementById('player-status-badge');
+    const deckLed = document.getElementById('deck-led');
+    const equalizer = document.getElementById('audio-equalizer');
+    const vinylDisc = document.getElementById('vinyl-disc');
+    const volumeSlider = document.getElementById('volume-slider');
+    const volumeIcon = document.getElementById('volume-icon');
+
+    function formatTime(seconds) {
+      if (isNaN(seconds) || seconds < 0) return '0:00';
+      const mins = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    }
+
+    function setTrack(index, autoPlay = false) {
+      currentTrackIndex = (index + tracks.length) % tracks.length;
+      const track = tracks[currentTrackIndex];
+
+      document.getElementById('current-track-tag').innerText = track.tag || 'CUSTOM STREAM // MASTER';
+      document.getElementById('current-track-title').innerText = track.title;
+      document.getElementById('current-track-artist').innerText = track.artist;
+      document.getElementById('current-track-link').href = track.spotify;
+
+      document.querySelectorAll('.track-row').forEach((row, idx) => {
+        if (idx === currentTrackIndex) {
+          row.style.borderColor = 'var(--accent-primary)';
+          row.classList.add('border-2');
+        } else {
+          row.style.borderColor = 'var(--border-color)';
+          row.classList.remove('border-2');
+        }
+      });
+
+      audio.src = track.audioSrc;
+      audio.load();
+      progressBar.style.width = '0%';
+      currentTimeEl.innerText = '0:00';
+      durationEl.innerText = '0:00';
+
+      if (autoPlay) {
+        audio.play().then(() => {
+          updatePlayUI(true);
+          showToast('Spinning: ' + track.title);
+        }).catch(() => {
+          updatePlayUI(false);
+        });
+      } else {
+        updatePlayUI(false);
+      }
+    }
+
+    function selectTrack(index) {
+      setTrack(index, true);
+    }
+
+    function toggleMusicPlay() {
+      if (!audio.src) {
+        setTrack(0, true);
+        return;
+      }
+      if (audio.paused) {
+        audio.play().then(() => {
+          updatePlayUI(true);
+        }).catch(() => {
+          playerStatusText.innerText = 'Stream blocked or offline. Use "Load Audio" for local file.';
+          showToast('Click Load Audio to play a local file');
+        });
+      } else {
+        audio.pause();
+        updatePlayUI(false);
+      }
+    }
+
+    function nextTrack() {
+      setTrack(currentTrackIndex + 1, true);
+    }
+
+    function prevTrack() {
+      if (audio.currentTime > 3) {
+        audio.currentTime = 0;
+      } else {
+        setTrack(currentTrackIndex - 1, true);
+      }
+    }
+
+    function updatePlayUI(isPlaying) {
+      if (isPlaying) {
+        playIcon.className = 'fa-solid fa-pause';
+        playerStatusText.innerText = 'Streaming live audio deck...';
+        statusBadge.innerText = 'DECK ACTIVE // PLAYING';
+        deckLed.className = 'w-3 h-3 rounded-full bg-emerald-400 animate-ping';
+        equalizer.classList.add('eq-playing');
+        vinylDisc.classList.add('playing');
+      } else {
+        playIcon.className = 'fa-solid fa-play';
+        playerStatusText.innerText = 'Deck paused';
+        statusBadge.innerText = 'DECK PAUSED // STANDBY';
+        deckLed.className = 'w-3 h-3 rounded-full bg-amber-400';
+        equalizer.classList.remove('eq-playing');
+        vinylDisc.classList.remove('playing');
+      }
+    }
+
+    audio.addEventListener('timeupdate', () => {
+      if (audio.duration) {
+        const pct = (audio.currentTime / audio.duration) * 100;
+        progressBar.style.width = pct + '%';
+        currentTimeEl.innerText = formatTime(audio.currentTime);
+        durationEl.innerText = formatTime(audio.duration);
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      durationEl.innerText = formatTime(audio.duration);
+    });
+
+    audio.addEventListener('ended', () => {
+      nextTrack();
+    });
+
+    function seekPlayer(e) {
+      const container = document.getElementById('scrub-container');
+      const rect = container.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const pct = Math.max(0, Math.min(1, clickX / rect.width));
+      if (audio.duration) {
+        audio.currentTime = pct * audio.duration;
+        progressBar.style.width = (pct * 100) + '%';
+      }
+    }
+
+    function adjustVolume(val) {
+      audio.volume = parseFloat(val);
+      if (audio.volume === 0) {
+        volumeIcon.className = 'fa-solid fa-volume-xmark';
+      } else if (audio.volume < 0.5) {
+        volumeIcon.className = 'fa-solid fa-volume-low';
+      } else {
+        volumeIcon.className = 'fa-solid fa-volume-high';
+      }
+    }
+
+    let lastVolume = 0.85;
+    function toggleMute() {
+      if (audio.volume > 0) {
+        lastVolume = audio.volume;
+        audio.volume = 0;
+        volumeSlider.value = 0;
+        volumeIcon.className = 'fa-solid fa-volume-xmark';
+      } else {
+        audio.volume = lastVolume || 0.85;
+        volumeSlider.value = audio.volume;
+        volumeIcon.className = 'fa-solid fa-volume-high';
+      }
+    }
+
+    function loadCustomLocalAudio(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const fileURL = URL.createObjectURL(file);
+      const cleanName = file.name.replace(/\.[^/.]+$/, "");
+      tracks.push({
+        tag: 'LOCAL MASTER // CUSTOM FILE',
+        title: cleanName,
+        artist: 'Nikssxelo Local Studio Master',
+        spotify: 'https://open.spotify.com/artist/5L1h09U0kX5xI6f20R8h8E',
+        audioSrc: fileURL
+      });
+      setTrack(tracks.length - 1, true);
+      showToast('Loaded master: ' + cleanName);
+    }
+
+    function toggleUrlDrawer() {
+      const drawer = document.getElementById('url-stream-drawer');
+      drawer.classList.toggle('hidden');
+    }
+
+    function loadCustomUrlStream() {
+      const input = document.getElementById('custom-stream-url-input');
+      const url = input.value.trim();
+      if (url && url.startsWith('http')) {
+        tracks.push({
+          tag: 'REMOTE STREAM // URL',
+          title: 'Custom Remote Stream',
+          artist: url,
+          spotify: url,
+          audioSrc: url
+        });
+        setTrack(tracks.length - 1, true);
+        input.value = '';
+        document.getElementById('url-stream-drawer').classList.add('hidden');
+        showToast('Loaded remote audio stream');
+      } else {
+        showToast('Please enter a valid http/https audio URL');
+      }
+    }
+
+    // =========================================================================
+    // 5. GET IN TOUCH & COMPLAINTS DISPATCH DESK (Nikssxelo@gmail.com)
+    // =========================================================================
+    let currentPriority = 'NORMAL';
+
+    function setPriority(prio) {
+      currentPriority = prio;
+      ['NORMAL', 'HIGH', 'URGENT'].forEach(p => {
+        const btn = document.getElementById('prio-' + p);
+        if (p === prio) {
+          btn.classList.add('accent-bg');
+          btn.classList.remove('neo-elevated');
+        } else {
+          btn.classList.remove('accent-bg');
+          btn.classList.add('neo-elevated');
+        }
+      });
+      updateLiveTicketPreview();
+    }
+
+    function updateLiveTicketPreview() {
+      const name = document.getElementById('sender-name').value || 'anonymous';
+      const email = document.getElementById('sender-email').value || 'user@domain.com';
+      const category = document.getElementById('issue-category').value;
+      const details = document.getElementById('complaint-details').value || 'Awaiting complaint or inquiry input...';
+
+      document.getElementById('preview-prio-badge').innerText = 'PRIORITY: ' + currentPriority;
+      document.getElementById('preview-sender').innerText = `${name} <${email}>`;
+      document.getElementById('preview-category').innerText = category;
+      document.getElementById('preview-body').innerText = details;
+    }
+
+    function handleComplaintSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('sender-name').value;
+      const email = document.getElementById('sender-email').value;
+      const category = document.getElementById('issue-category').value;
+      const details = document.getElementById('complaint-details').value;
+
+      const subject = encodeURIComponent(`[${currentPriority}] [${category}] — from ${name}`);
+      const body = encodeURIComponent(
+        `DISPATCH TICKET // NIKSSXELO PORTFOLIO\n` +
+        `----------------------------------------\n` +
+        `Sender: ${name} (${email})\n` +
+        `Category: ${category}\n` +
+        `Priority: ${currentPriority}\n\n` +
+        `Message / Complaint Details:\n${details}\n\n` +
+        `----------------------------------------\n` +
+        `Routed to: Nikssxelo@gmail.com`
+      );
+
+      window.location.href = `mailto:Nikssxelo@gmail.com?subject=${subject}&body=${body}`;
+      showToast('Dispatching complaint to Nikssxelo@gmail.com...');
+    }
+
+    function copyFormattedTicket() {
+      const name = document.getElementById('sender-name').value || 'Anonymous';
+      const email = document.getElementById('sender-email').value || 'N/A';
+      const category = document.getElementById('issue-category').value;
+      const details = document.getElementById('complaint-details').value || 'No details specified';
+
+      const formatted = `TO: Nikssxelo@gmail.com\nFROM: ${name} (${email})\nCATEGORY: [${currentPriority}] ${category}\n\n${details}`;
+      copyTextToClipboard(formatted, 'Copied formatted ticket to clipboard!');
+    }
+
+    function copyEmailDirectly() {
+      copyTextToClipboard('Nikssxelo@gmail.com', 'Copied Nikssxelo@gmail.com to clipboard!');
+    }
+
+    function copyTextToClipboard(text, message) {
+      const dummy = document.createElement('textarea');
+      document.body.appendChild(dummy);
+      dummy.value = text;
+      dummy.select();
+      document.execCommand('copy');
+      document.body.removeChild(dummy);
+      showToast(message);
+    }
+
+    // Toast Helper
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-msg');
+      toastMsg.innerText = msg;
+      toast.classList.remove('translate-x-96', 'opacity-0');
+      toast.classList.add('translate-x-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('translate-x-0', 'opacity-100');
+        toast.classList.add('translate-x-96', 'opacity-0');
+      }, 2600);
+    }
+
+    // Initialize Portfolio on Load
+    window.addEventListener('DOMContentLoaded', () => {
+      renderDirectoryTree();
+      selectTreeNode('01_Rosie_AI');
+      setTrack(0, false);
+      audio.volume = 0.85;
+    });
+  </script>
+</body>
+</html>
